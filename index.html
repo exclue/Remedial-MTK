@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<link rel="icon" type="image/jpg" href="download.jpg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transformasi</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #1a1a1a;
+    color: #f5f5f0;
+    padding: 20px;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Light Mode */
+body.light-mode {
+    background: #f5f5f0;
+    color: #1a1a1a;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+body.light-mode h1 {
+    color: #1a1a1a;
+}
+
+h2 {
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+}
+
+body.light-mode h2 {
+    color: #1a1a1a;
+}
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+@media (min-width: 1024px) {
+    .main-layout {
+        grid-template-columns: 450px 1fr;
+    }
+}
+
+@media (min-width: 1400px) {
+    .main-layout {
+        grid-template-columns: 500px 1fr;
+    }
+}
+
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background: #242424;
+    border: 1px solid #3a3a3a;
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 0.3s ease;
+}
+
+body.light-mode .card {
+    background: #e0e0e0;
+    border: 1px solid #b0b0b0;
+}
+
+.card:hover {
+    border-color: #4a4a4a;
+}
+
+body.light-mode .card:hover {
+    border-color: #a0a0a0;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+body.light-mode .card-title {
+    color: #1a1a1a;
+}
+
+.card-title::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: #f5f5f0;
+    border-radius: 2px;
+}
+
+body.light-mode .card-title::before {
+    background: #1a1a1a;
+}
+
+h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #f5f5f0;
+}
+
+body.light-mode h3 {
+    color: #1a1a1a;
+}
+
+.info-box {
+    background: #2a2a2a;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    border-left: 3px solid #4a4a4a;
+}
+
+body.light-mode .info-box {
+    background: #d0d0d0;
+    border-left: 3px solid #a0a0a0;
+}
+
+.info-box p {
+    margin-bottom: 8px;
+    color: #d0d0d0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+body.light-mode .info-box p {
+    color: #4a4a4a;
+}
+
+.info-box b {
+    color: #f5f5f0;
+    font-family: 'Courier New', monospace;
+    background: #1a1a1a;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+}
+
+body.light-mode .info-box b {
+    color: #1a1a1a;
+    background: #f5f5f0;
+}
+
+textarea {
+    width: 100%;
+    height: 200px;
+    padding: 16px;
+    background: #2a2a2a;
+    border: 2px solid #3a3a3a;
+    border-radius: 8px;
+    color: #f5f5f0;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    resize: vertical;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+body.light-mode textarea {
+    background: #d0d0d0;
+    border: 2px solid #b0b0b0;
+    color: #1a1a1a;
+}
+
+textarea:focus {
+    border-color: #5a5a5a;
+    background: #2d2d2d;
+    box-shadow: 0 0 0 3px rgba(90, 90, 90, 0.1);
+}
+
+body.light-mode textarea:focus {
+    border-color: #a0a0a0;
+    background: #c0c0c0;
+    box-shadow: 0 0 0 3px rgba(160, 160, 160, 0.1);
+}
+
+.section {
+    margin-bottom: 0;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #f5f5f0;
+    font-size: 0.95rem;
+}
+
+body.light-mode label {
+    color: #1a1a1a;
+}
+
+select, input[type="number"] {
+    padding: 12px 16px;
+    background: #2a2a2a;
+    border: 2px solid #3a3a3a;
+    border-radius: 8px;
+    color: #f5f5f0;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    outline: none;
+    cursor: pointer;
+}
+
+body.light-mode select,
+body.light-mode input[type="number"] {
+    background: #d0d0d0;
+    border: 2px solid #b0b0b0;
+    color: #1a1a1a;
+}
+
+select:hover, input[type="number"]:hover {
+    border-color: #4a4a4a;
+}
+
+body.light-mode select:hover,
+body.light-mode input[type="number"]:hover {
+    border-color: #a0a0a0;
+}
+
+select:focus, input[type="number"]:focus {
+    border-color: #5a5a5a;
+    box-shadow: 0 0 0 3px rgba(90, 90, 90, 0.1);
+}
+
+body.light-mode select:focus,
+body.light-mode input[type="number"]:focus {
+    border-color: #a0a0a0;
+    box-shadow: 0 0 0 3px rgba(160, 160, 160, 0.1);
+}
+
+select {
+    width: 100%;
+}
+
+input[type="number"] {
+    width: 100px;
+    margin-right: 12px;
+}
+
+.form-block {
+    display: none;
+    margin-top: 16px;
+    padding: 20px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    border-left: 3px solid #4a4a4a;
+    animation: slideIn 0.3s ease;
+}
+
+body.light-mode .form-block {
+    background: #d0d0d0;
+    border-left: 3px solid #a0a0a0;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.param-group {
+    margin-top: 16px;
+    padding: 16px;
+    background: #242424;
+    border-radius: 8px;
+    display: none;
+}
+
+body.light-mode .param-group {
+    background: #c0c0c0;
+}
+
+.param-group.show {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.param-label {
+    display: inline-block;
+    min-width: 30px;
+    color: #b0b0b0;
+    font-weight: 500;
+}
+
+body.light-mode .param-label {
+    color: #4a4a4a;
+}
+
+button {
+    padding: 14px 28px;
+    background: #f5f5f0;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+}
+
+button:hover {
+    background: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 245, 240, 0.15);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+#downloadBtn {
+    background: #3a3a3a;
+    color: #f5f5f0;
+    display: none;
+    margin-top: 12px;
+}
+
+body.light-mode #downloadBtn {
+    background: #b0b0b0;
+    color: #1a1a1a;
+}
+
+#downloadBtn:hover {
+    background: #4a4a4a;
+}
+
+body.light-mode #downloadBtn:hover {
+    background: #a0a0a0;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.canvas-container {
+    width: 100%;
+    height: 600px;
+    overflow: auto;
+    border: 2px solid #3a3a3a;
+    border-radius: 8px;
+    background: #0a0a0a;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    position: relative;
+}
+
+body.light-mode .canvas-container {
+    background: #f0f0f0;
+    border: 2px solid #b0b0b0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+canvas {
+    display: block;
+    background: #0a0a0a;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+body.light-mode canvas {
+    background: #f0f0f0;
+}
+
+.legend {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #d0d0d0;
+}
+
+body.light-mode .legend-item {
+    color: #4a4a4a;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.legend-dot.blue {
+    background: #4a9eff;
+}
+
+.legend-dot.red {
+    background: #ff4a4a;
+}
+
+/* Theme Toggle - Icon Only, No Card, No Container */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    color: #f5f5f0;
+    border: none;
+    cursor: pointer;
+    font-size: 32px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+body.light-mode .theme-toggle {
+    color: #1a1a1a;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.3) rotate(20deg);
+}
+
+body.light-mode .theme-toggle:hover {
+    transform: scale(1.3) rotate(-20deg);
+}
+
+/* Zoom Buttons - Inside canvas container, bottom right */
+.zoom-controls {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.zoom-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #f5f5f0;
+    color: #1a1a1a;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.zoom-btn:hover {
+    background: #ffffff;
+    transform: scale(1.1);
+}
+
+.zoom-btn:active {
+    transform: scale(0.95);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+body.light-mode ::-webkit-scrollbar-track {
+    background: #f5f5f0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3a3a3a;
+    border-radius: 6px;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb {
+    background: #b0b0b0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4a4a4a;
+}
+
+body.light-mode ::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+    .main-layout { grid-template-columns: 1fr; }
+    .canvas-container { height: 500px; }
+}
+@media (max-width: 768px) {
+    body { padding: 16px; }
+    .card { padding: 20px; }
+    textarea { height: 150px; }
+    input[type="number"] { width: 80px; }
+    .canvas-container { height: 400px; }
+    .zoom-controls {
+        gap: 6px;
+    }
+    .zoom-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+    }
+}
+@media (max-width: 480px) {
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; }
+    .card { padding: 16px; }
+    .canvas-container { height: 350px; }
+    .zoom-controls {
+        bottom: 8px;
+        right: 8px;
+        gap: 5px;
+    }
+    .zoom-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+    }
+}
+
+body.light-mode .footer {
+    color: #4a4a4a;
+}
+
+footer {
+    background-color: hsl(0, 0%, 15%);
+    padding: 30px 20px;
+    text-align: center;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    border-top: 2px solid #666666;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
+}
+
+footer {
+    font-size: 16px;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+footer:hover {
+    opacity: 1;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Theme Toggle - Icon Only -->
+<button class="theme-toggle" onclick="toggleTheme()">🔆</button>
+
+<div class="container">
+    <div class="header">
+        <h1>Transformasi Geometri Interaktif</h1>
+    </div>
+
+    <div class="main-layout">
+        <!-- LEFT PANEL: INPUT -->
+        <div class="left-panel">
+            <div class="card">
+                <div class="card-title">Input Koordinat</div>
+                <div class="info-box">
+                    <p>Masukkan titik-titik (format: x,y per baris):</p>
+                    <p><b>0,0<br>100,0<br>100,100<br>0,100</b></p>
+                </div>
+                <textarea id="inputPoints" placeholder="Masukkan koordinat titik...&#10;Contoh:&#10;0,0&#10;100,0&#10;100,100">0,0
+100,0
+100,100
+0,100</textarea>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Pilih Transformasi</div>
+                <div class="section">
+                    <label>Kategori Transformasi:</label>
+                    <select id="kategori" onchange="showForm()">
+                        <option value="">-- pilih transformasi --</option>
+                        <option value="refleksi">Refleksi</option>
+                        <option value="dilatasi">Dilatasi</option>
+                        <option value="rotasi">Rotasi</option>
+                        <option value="translasi">Translasi</option>
+                    </select>
+                </div>
+
+                <!-- REFLEKSI -->
+                <div id="form-refleksi" class="form-block">
+                    <h3>Refleksi</h3>
+                    <select id="refleksi-jenis" onchange="toggleRefleksi()">
+                        <option value="x">Terhadap sumbu x</option>
+                        <option value="y">Terhadap sumbu y</option>
+                        <option value="yx">Terhadap y = x</option>
+                        <option value="ynegx">Terhadap y = -x</option>
+                        <option value="origin">Titik (0,0)</option>
+                        <option value="titik">Titik (a,b)</option>
+                        <option value="xh">Garis x = h</option>
+                        <option value="yh">Garis y = h</option>
+                    </select>
+
+                    <div id="ref-param-titik" class="param-group">
+                        <span class="param-label">a:</span><input id="ref-a" type="number" value="0">
+                        <span class="param-label">b:</span><input id="ref-b" type="number" value="0">
+                    </div>
+                    <div id="ref-param-xh" class="param-group">
+                        <span class="param-label">h:</span><input id="ref-hx" type="number" value="0">
+                    </div>
+                    <div id="ref-param-yh" class="param-group">
+                        <span class="param-label">h:</span><input id="ref-hy" type="number" value="0">
+                    </div>
+                </div>
+
+                <!-- DILATASI -->
+                <div id="form-dilatasi" class="form-block">
+                    <h3>Dilatasi</h3>
+                    <select id="dilatasi-pusat" onchange="toggleDilatasi()">
+                        <option value="00">(0,0)</option>
+                        <option value="ab">(a,b)</option>
+                    </select>
+
+                    <div id="dil-pusat-ab" class="param-group">
+                        <span class="param-label">a:</span><input id="dil-a" type="number" value="0">
+                        <span class="param-label">b:</span><input id="dil-b" type="number" value="0">
+                    </div>
+
+                    <div style="margin-top: 16px;">
+                        <span class="param-label">Faktor skala k:</span>
+                        <input id="dil-k" type="number" step="0.1" value="2">
+                    </div>
+                </div>
+
+                <!-- ROTASI -->
+                <div id="form-rotasi" class="form-block">
+                    <h3>Rotasi</h3>
+                    <select id="rotasi-pusat" onchange="toggleRotasi()">
+                        <option value="00">(0,0)</option>
+                        <option value="ab">(a,b)</option>
+                    </select>
+
+                    <div id="rot-pusat-ab" class="param-group">
+                        <span class="param-label">a:</span><input id="rot-a" type="number" value="0">
+                        <span class="param-label">b:</span><input id="rot-b" type="number" value="0">
+                    </div>
+
+                    <div style="margin-top: 16px;">
+                        <span class="param-label">Sudut:</span>
+                        <select id="rot-sudut" style="width: auto;">
+                            <option value="90">90°</option>
+                            <option value="180">180°</option>
+                            <option value="270">270°</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- TRANSLASI -->
+                <div id="form-translasi" class="form-block">
+                    <h3>Translasi</h3>
+                    <div>
+                        <span class="param-label">dx:</span><input id="trans-dx" type="number" value="50">
+                        <span class="param-label">dy:</span><input id="trans-dy" type="number" value="50">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button onclick="gambar()">Gambar</button>
+                    <button id="downloadBtn" onclick="downloadCanvas()">Download Gambar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL: OUTPUT -->
+        <div class="right-panel">
+            <div class="card">
+                <div class="card-title">Hasil Visualisasi</div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <span class="legend-dot blue"></span>
+                        <span>Bentuk Asli</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot red"></span>
+                        <span>Hasil Transformasi</span>
+                    </div>
+                </div>
+                <div class="canvas-container" id="canvasContainer">
+                    <div class="canvas-wrapper" id="canvasWrapper">
+                        <canvas id="canvas"></canvas>
+                        <!-- Zoom Controls Inside Container -->
+                        <div class="zoom-controls">
+                            <button class="zoom-btn" onclick="zoomIn()">+</button>
+                            <button class="zoom-btn" onclick="zoomOut()">-</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>Project ini di buat oleh <br /> 
+                1. Filthan Demiant <br /> 
+                2. Toni Wiyanto <br /> 
+                3. Fachri Caesarainanto <br /> 
+                4. Rifa Azzhar
+            </footer>
+
+    </div>
+</div>
+
+<script>
+// === KONFIGURASI ===
+let SCALE = 15;
+const FIXED_CANVAS_SIZE = 800;
+
+// === VARIABEL GLOBAL ===
+let offsetX = 0;
+let offsetY = 0;
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const canvasContainer = document.getElementById("canvasContainer");
+const canvasWrapper = document.getElementById("canvasWrapper");
+
+// === FUNGSI BANTU ===
+function toCanvasX(x) {
+    return (x - offsetX) * SCALE;
+}
+function toCanvasY(y) {
+    return (offsetY - y) * SCALE;
+}
+
+function getBounds(points1, points2) {
+    if (points1.length === 0 && points2.length === 0) {
+        return { minX: -100, maxX: 100, minY: -100, maxY: 100 };
+    }
+    let xs = [], ys = [];
+    for (const [x, y] of [...points1, ...points2]) {
+        xs.push(x);
+        ys.push(y);
+    }
+    const minX = Math.min(...xs) - 50;
+    const maxX = Math.max(...xs) + 50;
+    const minY = Math.min(...ys) - 50;
+    const maxY = Math.max(...ys) + 50;
+    return { minX, maxX, minY, maxY };
+}
+
+// === FUNGSI GAMBAR ===
+function drawGrid() {
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    const startUnitX = Math.floor(offsetX);
+    const endUnitX = Math.ceil(offsetX + w / SCALE);
+    const startUnitY = Math.floor(offsetY - h / SCALE);
+    const endUnitY = Math.ceil(offsetY);
+
+    ctx.strokeStyle = "#1a1a1a";
+    ctx.lineWidth = 1;
+    for (let x = startUnitX; x <= endUnitX; x += 10) {
+        const cx = toCanvasX(x);
+        if (cx >= 0 && cx <= w) {
+            ctx.beginPath();
+            ctx.moveTo(cx, 0);
+            ctx.lineTo(cx, h);
+            ctx.stroke();
+        }
+    }
+    for (let y = startUnitY; y <= endUnitY; y += 10) {
+        const cy = toCanvasY(y);
+        if (cy >= 0 && cy <= h) {
+            ctx.beginPath();
+            ctx.moveTo(0, cy);
+            ctx.lineTo(w, cy);
+            ctx.stroke();
+        }
+    }
+
+    ctx.strokeStyle = "#3a3a3a";
+    ctx.lineWidth = 2;
+    if (offsetY - h / SCALE <= 0 && 0 <= offsetY) {
+        const y0 = toCanvasY(0);
+        ctx.beginPath();
+        ctx.moveTo(0, y0);
+        ctx.lineTo(w, y0);
+        ctx.stroke();
+    }
+    if (offsetX <= 0 && 0 <= offsetX + w / SCALE) {
+        const x0 = toCanvasX(0);
+        ctx.beginPath();
+        ctx.moveTo(x0, 0);
+        ctx.lineTo(x0, h);
+        ctx.stroke();
+    }
+
+    ctx.fillStyle = "#6a6a6a";
+    ctx.font = "11px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    for (let x = startUnitX; x <= endUnitX; x += 10) {
+        if (x === 0) continue;
+        const cx = toCanvasX(x);
+        if (cx >= 10 && cx <= w - 10) {
+            const y0 = toCanvasY(0);
+            if (y0 >= 10 && y0 <= h - 10) {
+                ctx.fillText(x, cx, y0 + 5);
+            }
+        }
+    }
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    for (let y = startUnitY; y <= endUnitY; y += 10) {
+        if (y === 0) continue;
+        const cy = toCanvasY(y);
+        if (cy >= 10 && cy <= h - 10) {
+            const x0 = toCanvasX(0);
+            if (x0 >= 10 && x0 <= w - 10) {
+                ctx.fillText(y, x0 - 5, cy);
+            }
+        }
+    }
+
+    if (offsetX <= 0 && 0 <= offsetX + w / SCALE &&
+        offsetY - h / SCALE <= 0 && 0 <= offsetY) {
+        const x0 = toCanvasX(0);
+        const y0 = toCanvasY(0);
+        ctx.textAlign = "right";
+        ctx.textBaseline = "top";
+        ctx.fillText("0", x0 - 5, y0 + 5);
+    }
+}
+
+function drawShape(points, color, isOriginal) {
+    if (points.length === 0) return;
+
+    if (points.length >= 2) {
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.moveTo(toCanvasX(points[0][0]), toCanvasY(points[0][1]));
+        for (let i = 1; i < points.length; i++) {
+            ctx.lineTo(toCanvasX(points[i][0]), toCanvasY(points[i][1]));
+        }
+        if (points.length > 2) ctx.closePath();
+        ctx.stroke();
+    }
+
+    ctx.fillStyle = color;
+    for (let i = 0; i < points.length; i++) {
+        const [x, y] = points[i];
+        const cx = toCanvasX(x);
+        const cy = toCanvasY(y);
+        ctx.beginPath();
+        ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.fillStyle = color;
+        ctx.font = "12px Inter, sans-serif";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        let labelX = cx + 8;
+        let labelY = cy + 8;
+        
+        if (Math.abs(cy - toCanvasY(0)) < 10) {
+            labelY = cy - 20;
+        } else if (Math.abs(cx - toCanvasX(0)) < 10) {
+            labelX = cx + 8;
+        }
+        
+        const label = `(${x},${y})`;
+        ctx.fillText(label, labelX, labelY);
+    }
+}
+
+// === TRANSFORMASI ===
+function refleksi(points) {
+    const jenis = document.getElementById("refleksi-jenis").value;
+    const a = parseFloat(document.getElementById("ref-a").value) || 0;
+    const b = parseFloat(document.getElementById("ref-b").value) || 0;
+    const h1 = parseFloat(document.getElementById("ref-hx").value) || 0;
+    const h2 = parseFloat(document.getElementById("ref-hy").value) || 0;
+    return points.map(([x, y]) => {
+        switch (jenis) {
+            case "x": return [x, -y];
+            case "y": return [-x, y];
+            case "yx": return [y, x];
+            case "ynegx": return [-y, -x];
+            case "origin": return [-x, -y];
+            case "titik": return [2*a - x, 2*b - y];
+            case "xh": return [2*h1 - x, y];
+            case "yh": return [x, 2*h2 - y];
+            default: return [x, y];
+        }
+    });
+}
+
+function dilatasi(points) {
+    const pusat = document.getElementById("dilatasi-pusat").value;
+    const k = parseFloat(document.getElementById("dil-k").value);
+    if (isNaN(k)) return points;
+    let a = 0, b = 0;
+    if (pusat === "ab") {
+        a = parseFloat(document.getElementById("dil-a").value) || 0;
+        b = parseFloat(document.getElementById("dil-b").value) || 0;
+    }
+    return points.map(([x, y]) => [a + k*(x - a), b + k*(y - b)]);
+}
+
+function rotasi(points) {
+    const pusat = document.getElementById("rotasi-pusat").value;
+    const s = parseInt(document.getElementById("rot-sudut").value) || 0;
+    let a = 0, b = 0;
+    if (pusat === "ab") {
+        a = parseFloat(document.getElementById("rot-a").value) || 0;
+        b = parseFloat(document.getElementById("rot-b").value) || 0;
+    }
+    return points.map(([x, y]) => {
+        let X = x - a, Y = y - b;
+        let nx, ny;
+        if (s === 90) { nx = -Y; ny = X; }
+        else if (s === 180) { nx = -X; ny = -Y; }
+        else if (s === 270) { nx = Y; ny = -X; }
+        else { nx = X; ny = Y; }
+        return [nx + a, ny + b];
+    });
+}
+
+function translasi(points) {
+    const dx = parseFloat(document.getElementById("trans-dx").value) || 0;
+    const dy = parseFloat(document.getElementById("trans-dy").value) || 0;
+    return points.map(([x, y]) => [x + dx, y + dy]);
+}
+
+function transform(points) {
+    const kategori = document.getElementById("kategori").value;
+    if (!kategori) return points;
+    if (kategori === "refleksi") return refleksi(points);
+    if (kategori === "dilatasi") return dilatasi(points);
+    if (kategori === "rotasi") return rotasi(points);
+    if (kategori === "translasi") return translasi(points);
+    return points;
+}
+
+// === UTAMA ===
+function getUserPoints() {
+    const raw = document.getElementById("inputPoints").value.trim().split(/\n+/);
+    const points = [];
+    for (const line of raw) {
+        if (!line.trim()) continue;
+        const coords = line.split(',').map(s => s.trim());
+        if (coords.length !== 2) continue;
+        const x = parseFloat(coords[0]);
+        const y = parseFloat(coords[1]);
+        if (!isNaN(x) && !isNaN(y)) {
+            points.push([x, y]);
+        }
+    }
+    return points;
+}
+
+function gambar() {
+    const points = getUserPoints();
+
+    const originalPoints = points;
+    const transformedPoints = transform(points);
+
+    const bounds = getBounds(originalPoints, transformedPoints);
+    
+    // Tetap menggunakan ukuran canvas yang tetap
+    canvas.width = FIXED_CANVAS_SIZE;
+    canvas.height = FIXED_CANVAS_SIZE;
+    
+    // Hitung offset untuk memusatkan gambar dalam canvas
+    const widthInUnits = bounds.maxX - bounds.minX;
+    const heightInUnits = bounds.maxY - bounds.minY;
+    
+    // Gunakan skala yang sesuai agar gambar pas dalam canvas
+    const scaleX = FIXED_CANVAS_SIZE / widthInUnits;
+    const scaleY = FIXED_CANVAS_SIZE / heightInUnits;
+    SCALE = Math.min(scaleX, scaleY) * 0.8; // 0.8 untuk memberikan sedikit ruang di sekitar gambar
+    
+    // Pusatkan gambar
+    offsetX = bounds.minX + widthInUnits / 2 - (FIXED_CANVAS_SIZE / 2) / SCALE;
+    offsetY = bounds.maxY - heightInUnits / 2 + (FIXED_CANVAS_SIZE / 2) / SCALE;
+
+    drawGrid();
+    drawShape(originalPoints, "#4a9eff", true);
+    drawShape(transformedPoints, "#ff4a4a", false);
+
+    document.getElementById("downloadBtn").style.display = "inline-block";
+}
+
+function downloadCanvas() {
+    const link = document.createElement('a');
+    link.download = 'transformasi-geometri.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+
+// === UI ===
+function showForm() {
+    const kategori = document.getElementById("kategori").value;
+    const forms = ["form-refleksi", "form-dilatasi", "form-rotasi", "form-translasi"];
+    forms.forEach(id => document.getElementById(id).style.display = "none");
+    if (kategori) {
+        document.getElementById("form-" + kategori).style.display = "block";
+    }
+}
+
+function toggleRefleksi() {
+    const jenis = document.getElementById("refleksi-jenis").value;
+    document.getElementById("ref-param-titik").className = jenis === "titik" ? "param-group show" : "param-group";
+    document.getElementById("ref-param-xh").className = jenis === "xh" ? "param-group show" : "param-group";
+    document.getElementById("ref-param-yh").className = jenis === "yh" ? "param-group show" : "param-group";
+}
+
+function toggleDilatasi() {
+    const pusat = document.getElementById("dilatasi-pusat").value;
+    document.getElementById("dil-pusat-ab").className = pusat === "ab" ? "param-group show" : "param-group";
+}
+
+function toggleRotasi() {
+    const pusat = document.getElementById("rotasi-pusat").value;
+    document.getElementById("rot-pusat-ab").className = pusat === "ab" ? "param-group show" : "param-group";
+}
+
+// === ZOOM FUNCTIONS ===
+function zoomIn() {
+    if (SCALE < 50) {
+        SCALE *= 1.1;
+        gambar();
+    }
+}
+
+function zoomOut() {
+    if (SCALE > 5) {
+        SCALE /= 1.1;
+        gambar();
+    }
+}
+
+// === THEME ===
+function toggleTheme() {
+    const body = document.body;
+    const toggleBtn = document.querySelector('.theme-toggle');
+    
+    if (body.classList.contains('light-mode')) {
+        body.classList.remove('light-mode');
+        toggleBtn.textContent = '🔆';
+    } else {
+        body.classList.add('light-mode');
+        toggleBtn.textContent = '☾';
+    }
+}
+
+// Inisialisasi
+drawGrid();
+</script>
+
+</body>
+</html>
